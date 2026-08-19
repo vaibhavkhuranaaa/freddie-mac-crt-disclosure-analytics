@@ -1,0 +1,159 @@
+<!doctype html>
+<!--
+THESIS: Monthly exception book, not a marketing dashboard or a field of cards.
+OWN-WORLD: Cool filing sheets, registration ink, hard rules, condensed headings, and one chartreuse review mark.
+STORY: Read portfolio move, inspect full masked records, test rate versus mix, then verify evidence.
+FIRST VIEWPORT: Current figures and review controls precede compact filing metadata.
+FORM: Risk-committee docket with a finding-first evidence sequence.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Full-record Freddie Mac CRT collateral surveillance with masked direct identifiers." />
+    <meta property="og:title" content="CRT Collateral Surveillance" />
+    <meta property="og:description" content="A public full-record risk docket for Freddie Mac CRT disclosure performance." />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#171a1f" />
+    <title>CRT Collateral Surveillance</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23171a1f'/%3E%3Cpath d='M12 16h40v8H20v24h32v8H12z' fill='%23d7ff3f'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to analysis</a>
+
+    <header class="topbar">
+      <div class="shell topbar-inner">
+        <a class="brand" href="#pulse" aria-label="CRT collateral surveillance home">
+          <span aria-hidden="true">CRT</span>
+          <strong>Collateral surveillance</strong>
+        </a>
+        <nav aria-label="Docket sections">
+          <a href="#records">Records</a>
+          <a href="#watchlist">Queue</a>
+          <a href="#comparison">Compare</a>
+          <a href="#drivers">Attribution</a>
+          <a href="#flows">Flows</a>
+        </nav>
+        <div class="classification">
+          <strong>Public full data</strong>
+          <small>Direct identifiers masked</small>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="shell">
+      <section class="docket-cover" aria-labelledby="page-title">
+        <div class="folio" aria-hidden="true">
+          <span>FM CRT</span>
+          <b id="folio-period">-- / --</b>
+          <small>Monthly file</small>
+        </div>
+        <div class="cover-copy">
+          <p class="filing-label">Collateral performance / monthly review</p>
+          <h1 id="page-title"><span id="docket-month">Disclosure review</span><em>risk docket</em></h1>
+          <p class="cover-deck">Start with the measured exception, then inspect the complete masked loan-period register behind it.</p>
+        </div>
+        <dl class="file-meta">
+          <div><dt>File</dt><dd id="docket-file">SURV / PENDING</dd></div>
+          <div><dt>Source</dt><dd id="source-scope">Loading full-data register</dd></div>
+          <div><dt>Method</dt><dd id="metric-version">Metric version pending</dd></div>
+          <div><dt>Release</dt><dd>Full records / masked PII</dd></div>
+        </dl>
+      </section>
+
+      <div id="loading" class="state" role="status"><strong>Opening full disclosure evidence</strong><span>Loading current metrics and the masked record register.</span></div>
+      <div id="error" class="state error hidden" role="alert"><strong>Unable to load disclosure data.</strong><span id="error-message">Reload the current release, then retry.</span></div>
+      <div id="empty" class="state hidden" role="status"><strong>No disclosure records match these filters.</strong><span>Select another disclosure month.</span></div>
+
+      <div id="workspace" class="hidden">
+        <section id="pulse" class="panel pulse" aria-labelledby="pulse-title">
+          <header class="docket-heading">
+            <span class="section-code">01 / Portfolio finding</span>
+            <div><h2 id="pulse-title">Monthly exception</h2><p id="pulse-context"></p></div>
+            <span id="pulse-period"></span>
+          </header>
+          <div class="pulse-grid">
+            <div class="primary-move"><span>Monthly D60+ change</span><strong id="pulse-change">-</strong><small id="pulse-three-month"></small></div>
+            <dl class="supporting-facts">
+              <div><dt>Eligible current UPB</dt><dd id="pulse-upb">-</dd><dd class="metric-note"><small id="pulse-population"></small></dd></div>
+              <div><dt>D60+ level</dt><dd id="pulse-d60">-</dd><dd class="metric-note"><small>Eligible current UPB denominator</small></dd></div>
+              <div><dt>Largest portfolio contributor</dt><dd id="pulse-driver">-</dd><dd class="metric-note"><small id="pulse-driver-detail"></small></dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="filters" aria-label="Review controls">
+          <div class="filter-heading"><span>Review scope</span><strong>Set the file, deal, and ranking lens.</strong></div>
+          <label><span>Disclosure month</span><select id="period-filter"></select><small>Latest verified month by default</small></label>
+          <label><span>Deal under review</span><select id="deal-filter"></select><small>Only deals reported in this month</small></label>
+          <label><span>Queue order</span><select id="sort-filter"><option value="total_contribution_bps">Portfolio D60+ contribution</option><option value="d60_change_1m_bps">Deal D60+ monthly change</option><option value="d60_plus_rate">D60+ level</option><option value="current_to_d30_rate_upb">Current to D30 roll rate</option><option value="d30_to_d60_rate_upb">D30 to D60 roll rate</option></select><small>Highest value first; selected measure is shown</small></label>
+        </section>
+
+        <section id="records" class="panel records" aria-labelledby="records-title">
+          <header class="docket-heading">
+            <span class="section-code">02 / Full record register</span>
+            <div><h2 id="records-title">Loan-period evidence</h2><p id="records-context">Every stored disclosure field is available for the selected deal and month.</p></div>
+            <span id="records-release">96 stored columns</span>
+          </header>
+          <div class="record-toolbar">
+            <label><span>Record status</span><select id="record-status"><option value="all">All records</option><option value="current">Current</option><option value="d30">D30</option><option value="d60">D60</option><option value="d90">D90+</option><option value="reo">REO</option><option value="zero_balance">Zero balance</option></select></label>
+            <p class="mask-note"><strong>Identifier control</strong> Loan identifier and ZIP3 are replaced with stable keyed tokens before publication. Other disclosed field combinations may remain linkable to the source release.</p>
+            <div class="record-pager"><button id="record-prev" type="button" disabled>Previous</button><span id="record-page-status" role="status">Loading records</span><button id="record-next" type="button" disabled>Next</button></div>
+          </div>
+          <div id="records-loading" class="inline-state" role="status">Querying the selected full-data partition.</div>
+          <div id="records-error" class="inline-state error hidden" role="alert"></div>
+          <div class="table-scroll record-table-wrap" role="region" tabindex="0" aria-label="Scrollable full loan-period register"><table><caption>Masked full loan-period records for the selected deal and period</caption><thead><tr><th>Masked loan</th><th>Pool</th><th>Status</th><th class="num">Current UPB</th><th class="num">Coupon</th><th class="num">FICO</th><th class="num">LTV</th><th class="num">DTI</th><th>Purpose</th><th>Occupancy</th><th>Modification</th><th>All fields</th></tr></thead><tbody id="record-body"></tbody></table></div>
+          <section id="record-detail" class="record-detail hidden" aria-labelledby="record-detail-title">
+            <header><div><span>Selected record</span><h3 id="record-detail-title" tabindex="-1">All disclosure fields</h3></div><button id="record-detail-close" type="button">Close detail</button></header>
+            <dl id="record-fields" class="record-fields"></dl>
+          </section>
+        </section>
+
+        <section id="watchlist" class="panel" aria-labelledby="watchlist-title">
+          <header class="docket-heading">
+            <span class="section-code">03 / Investigation queue</span>
+            <div><h2 id="watchlist-title">Deal review order</h2><p id="watchlist-context"></p></div>
+            <span class="row-instruction"><span class="desktop-copy">Enter or Space opens a deal</span><span class="mobile-copy">Tap a deal to open</span></span>
+          </header>
+          <div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable deal watchlist"><table><caption>Deals ranked by the selected measure; activate a deal button to investigate</caption><thead><tr><th>Rank</th><th>Deal</th><th class="num">D60+</th><th class="num">1M change</th><th class="num">D60+ UPB</th><th id="selected-measure-heading" class="num">Selected measure</th><th class="num">Rate effect</th><th class="num">Mix effect</th><th>Evidence</th></tr></thead><tbody id="watchlist-body"></tbody></table></div>
+        </section>
+
+        <div class="analysis-grid">
+          <div>
+            <section id="comparison" class="panel" aria-labelledby="comparison-title">
+              <header class="docket-heading"><span class="section-code">04 / Relative performance</span><div><h2 id="comparison-title">Deal versus portfolio</h2><p id="comparison-context"></p></div><div class="legend"><span><i class="deal"></i><b id="legend-deal">Deal</b></span><span><i class="portfolio"></i>Portfolio</span></div></header>
+              <div id="comparison-summary" class="summary-grid"></div>
+              <div class="chart-frame"><svg id="trend-chart" viewBox="0 0 920 290" role="img" aria-labelledby="chart-title chart-desc"><title id="chart-title">Selected deal and portfolio D60+ history</title><desc id="chart-desc">Two keyed series compare the selected deal with the portfolio for common reporting months.</desc></svg></div>
+              <details><summary>Open comparison ledger</summary><div class="table-scroll" tabindex="0"><table><caption>Selected deal and portfolio D60+ history</caption><thead><tr><th>Month</th><th class="num">Deal</th><th class="num">Portfolio</th><th class="num">Difference</th></tr></thead><tbody id="trend-table"></tbody></table></div></details>
+            </section>
+
+            <section id="drivers" class="panel" aria-labelledby="drivers-title">
+              <header class="docket-heading"><span class="section-code">05 / Attribution</span><div><h2 id="drivers-title">Rate effect or portfolio mix?</h2><p>Exact midpoint attribution separates within-deal performance from composition.</p></div><span id="identity-state"></span></header>
+              <div id="driver-summary" class="summary-grid three"></div>
+              <div class="table-scroll" tabindex="0"><table><caption>Signed deal-level D60+ contributions</caption><thead><tr><th>Deal</th><th class="num">Rate effect</th><th class="num">Mix effect</th><th class="num">Total contribution</th><th>Interpretation</th></tr></thead><tbody id="driver-body"></tbody></table></div>
+            </section>
+
+            <section id="flows" class="panel" aria-labelledby="flows-title">
+              <header class="docket-heading"><span class="section-code">06 / Transition evidence</span><div><h2 id="flows-title">Delinquency flow and outcomes</h2><p id="flow-context"></p></div><span id="flow-match"></span></header>
+              <div id="flow-grid" class="flow-grid"></div>
+              <div class="table-scroll" tabindex="0"><table><caption>Reference-pool performance for the selected deal</caption><thead><tr><th>Reference pool</th><th class="num">Eligible UPB</th><th class="num">D60+</th><th class="num">1M change</th></tr></thead><tbody id="pool-body"></tbody></table></div>
+            </section>
+          </div>
+
+          <aside aria-label="Review notes and release boundary">
+            <section class="rail-intro"><span>Review notes</span><h2>Evidence on file</h2><p>Summary measures and masked loan-period records come from the complete 20.4 million-row disclosure foundation.</p></section>
+            <section><span class="rail-code">Measure</span><h3>Selected measure</h3><dl id="metric-definition"></dl></section>
+            <section><span class="rail-code">Controls</span><h3>Control stamps</h3><ul id="control-list"></ul></section>
+            <section class="boundary"><span class="rail-code">Boundary</span><h3>Public masking boundary</h3><p>All loan-period rows and disclosed fields are queryable. Original loan identifier, ZIP3, source archives, and local paths are not published.</p><strong>Masked records are descriptive evidence, not a borrower decisioning dataset.</strong></section>
+            <section><span class="rail-code">Use</span><h3>Interpretation limits</h3><p>Descriptive surveillance. Not a forecast, causal estimate, investment recommendation, or borrower decision.</p></section>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <footer class="shell"><span>CRT / public full-record file</span><p>Complete Freddie Mac CRT disclosure register with direct identifiers masked. No lending, pricing, servicing, marketing, or credit decisioning.</p></footer>
+    <div id="announcement" class="sr-only" aria-live="polite"></div>
+    <script src="app.js" defer></script>
+  </body>
+</html>

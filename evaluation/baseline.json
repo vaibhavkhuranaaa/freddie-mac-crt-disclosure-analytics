@@ -1,0 +1,48 @@
+{
+  "evaluation_id": "E-M1-BASELINE-001",
+  "fixture": "tests/fixtures/crt_aggregate_fixture.csv",
+  "source_classification": "synthetic-fixture",
+  "rows_validated": 10,
+  "pool_periods_covered": 4,
+  "schema_validity_rate": 1.0,
+  "control_check_pass_rate": 1.0,
+  "tranche_notional_total": 9842250.0,
+  "expected_tranche_notional_total": 9842250.0,
+  "absolute_reconciliation_variance": 0.0,
+  "runtime_ms": 0.419,
+  "rates": [
+    {
+      "reporting_period": "2025-01",
+      "deal_id": "DEMO-2024-A",
+      "delinquency_rate": 0.012,
+      "prepayment_rate": 0.008,
+      "credit_event_rate": 0.0015
+    },
+    {
+      "reporting_period": "2025-01",
+      "deal_id": "DEMO-2024-B",
+      "delinquency_rate": 0.00875,
+      "prepayment_rate": 0.0075,
+      "credit_event_rate": 0.001
+    },
+    {
+      "reporting_period": "2025-02",
+      "deal_id": "DEMO-2024-A",
+      "delinquency_rate": 0.01114488,
+      "prepayment_rate": 0.01215805,
+      "credit_event_rate": 0.00172239
+    },
+    {
+      "reporting_period": "2025-02",
+      "deal_id": "DEMO-2024-B",
+      "delinquency_rate": 0.0094697,
+      "prepayment_rate": 0.01136364,
+      "credit_event_rate": 0.00113636
+    }
+  ],
+  "limitations": [
+    "This result validates synthetic aggregate fixture behavior only.",
+    "It is not evidence of performance on Freddie Mac disclosure files.",
+    "No borrower-level or record-level decisioning is included."
+  ]
+}

@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Private local Freddie Mac CRT collateral-surveillance workbench."
+    />
+    <title>CRT Collateral Surveillance | Private Workbench</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to analytical content</a>
+
+    <header class="topbar">
+      <div class="shell topbar-inner">
+        <a class="brand" href="#pulse" aria-label="CRT Collateral Surveillance home">
+          <span class="brand-mark" aria-hidden="true">CRT</span>
+          <span>
+            <strong>Collateral Surveillance</strong>
+            <small>Freddie Mac disclosure analytics</small>
+          </span>
+        </a>
+        <nav aria-label="Workbench sections">
+          <a href="#watchlist">Watchlist</a>
+          <a href="#compare">Compare</a>
+          <a href="#drivers">Drivers</a>
+          <a href="#flows">Flows</a>
+          <a href="#loans">Loan detail</a>
+        </nav>
+        <div class="classification-lock">
+          <strong>Private local</strong>
+          <span>Restricted data</span>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" class="shell">
+      <section class="brief" aria-labelledby="page-title">
+        <div>
+          <p class="kicker">Monthly surveillance</p>
+          <h1 id="page-title">Find the deterioration. Verify the evidence.</h1>
+          <p class="brief-copy">
+            Rank deals, explain D60+ movement, inspect flows, and trace permitted rows.
+          </p>
+        </div>
+        <div class="brief-status" role="status" aria-label="Source status">
+          <span id="source-status">Opening the restricted metric layer</span>
+          <strong id="source-version">Metric version pending</strong>
+        </div>
+      </section>
+
+      <section class="control-bar" aria-label="Global workbench filters">
+        <label>
+          <span>Disclosure month</span>
+          <select id="period-filter" aria-describedby="period-help"></select>
+          <small id="period-help">Latest verified disclosure period by default</small>
+        </label>
+        <label>
+          <span>Deal to investigate</span>
+          <select id="deal-filter"></select>
+          <small>Controls comparison, flows, and restricted detail</small>
+        </label>
+        <label>
+          <span>Rank deals by</span>
+          <select id="sort-filter">
+            <option value="total_contribution_bps">Portfolio D60+ contribution</option>
+            <option value="d60_change_1m_bps">Deal D60+ monthly change</option>
+            <option value="d60_plus_rate">D60+ level</option>
+            <option value="current_to_d30_rate_upb">Current to D30 roll rate</option>
+            <option value="d30_to_d60_rate_upb">D30 to D60 roll rate</option>
+          </select>
+          <small>Highest value first; selected measure is shown</small>
+        </label>
+        <button id="export-evidence" class="primary-action" type="button">
+          Export evidence
+        </button>
+      </section>
+
+      <div id="loading-state" class="state-panel" role="status" aria-live="polite">
+        <div class="skeleton skeleton-wide"></div>
+        <div class="skeleton-grid" aria-hidden="true">
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+        </div>
+        <strong>Loading governed metrics</strong>
+        <span>Opening the read-only local database and preparing the latest view.</span>
+      </div>
+
+      <div id="error-state" class="state-panel state-error hidden" role="alert">
+        <strong>The workbench could not load the analytical view.</strong>
+        <span id="error-message">Verify the restricted metric database, then restart the local service.</span>
+        <button id="retry-button" type="button">Retry</button>
+      </div>
+
+      <div id="workspace" class="hidden">
+        <section id="pulse" class="pulse" aria-labelledby="pulse-title">
+          <header class="section-heading">
+            <div>
+              <h2 id="pulse-title">Portfolio pulse</h2>
+              <p id="pulse-summary">Latest portfolio surveillance position.</p>
+            </div>
+            <span id="pulse-period" class="as-of"></span>
+          </header>
+          <dl class="pulse-grid">
+            <div>
+              <dt>Eligible current UPB</dt>
+              <dd id="pulse-upb">-</dd>
+              <dd class="metric-note"><small id="pulse-population">Eligible active population</small></dd>
+            </div>
+            <div>
+              <dt>D60+ level</dt>
+              <dd id="pulse-d60">-</dd>
+              <dd class="metric-note"><small>Eligible current UPB denominator</small></dd>
+            </div>
+            <div>
+              <dt>Monthly change</dt>
+              <dd id="pulse-change">-</dd>
+              <dd class="metric-note"><small id="pulse-change-context">Basis points versus prior period</small></dd>
+            </div>
+            <div>
+              <dt>Largest portfolio contributor</dt>
+              <dd id="pulse-driver">-</dd>
+              <dd class="metric-note"><small id="pulse-driver-detail">Signed contribution to portfolio change</small></dd>
+            </div>
+          </dl>
+        </section>
+
+        <div class="evidence-layout">
+          <div class="analytical-field">
+            <section id="watchlist" class="analysis-section" aria-labelledby="watchlist-title">
+              <header class="section-heading">
+                <div>
+                  <h2 id="watchlist-title">Ranked deal watchlist</h2>
+                  <p id="watchlist-context">Select a row to investigate the deal.</p>
+                </div>
+                <span>Select a row to investigate</span>
+              </header>
+              <div class="table-scroll" role="region" tabindex="0" aria-label="Scrollable deal watchlist">
+                <table id="watchlist-table">
+                  <caption>Deals ranked by the selected surveillance measure; press Enter or Space on a row to investigate</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Rank</th>
+                      <th scope="col">Deal</th>
+                      <th scope="col" class="num">D60+</th>
+                      <th scope="col" class="num">1M change</th>
+                      <th scope="col" class="num">D60+ UPB</th>
+                      <th id="selected-measure-heading" scope="col" class="num">Selected measure</th>
+                      <th scope="col" class="num">Rate effect</th>
+                      <th scope="col" class="num">Mix effect</th>
+                      <th scope="col">Evidence</th>
+                    </tr>
+                  </thead>
+                  <tbody id="watchlist-body"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="compare" class="analysis-section" aria-labelledby="compare-title">
+              <header class="section-heading">
+                <div>
+                  <h2 id="compare-title">Selected deal comparison</h2>
+                  <p id="compare-context">Selected deal versus the eligible-UPB-weighted portfolio.</p>
+                </div>
+                <div class="legend" role="group" aria-label="Comparison chart legend">
+                  <span><i class="swatch selected"></i><b id="legend-deal">Selected deal</b></span>
+                  <span><i class="swatch portfolio"></i>Portfolio</span>
+                </div>
+              </header>
+              <div class="compare-summary" id="compare-summary"></div>
+              <div class="chart-frame">
+                <svg
+                  id="trend-chart"
+                  viewBox="0 0 960 300"
+                  role="img"
+                  aria-labelledby="trend-chart-title trend-chart-desc"
+                >
+                  <title id="trend-chart-title">Selected deal and portfolio D60+ history</title>
+                  <desc id="trend-chart-desc">A keyed time series; deal and portfolio observations are never connected across entities.</desc>
+                </svg>
+              </div>
+              <details class="table-alternative">
+                <summary>View comparison data table</summary>
+                <div class="table-scroll">
+                  <table>
+                    <caption>Selected deal and portfolio D60+ history</caption>
+                    <thead><tr><th>Period</th><th class="num">Selected deal</th><th class="num">Portfolio</th><th class="num">Difference</th></tr></thead>
+                    <tbody id="trend-table-body"></tbody>
+                  </table>
+                </div>
+              </details>
+            </section>
+
+            <section id="drivers" class="analysis-section" aria-labelledby="drivers-title">
+              <header class="section-heading">
+                <div>
+                  <h2 id="drivers-title">Explain the D60+ change</h2>
+                  <p>Exact midpoint attribution separates within-deal performance from portfolio mix.</p>
+                </div>
+                <span id="driver-identity" class="control-pass"></span>
+              </header>
+              <div class="driver-total" id="driver-total"></div>
+              <div id="driver-bars" class="driver-bars" role="img" aria-label="Deal contribution bars"></div>
+              <div class="table-scroll compact-table">
+                <table>
+                  <caption>Signed deal-level D60+ contributions</caption>
+                  <thead><tr><th>Deal</th><th class="num">Rate effect</th><th class="num">Mix effect</th><th class="num">Total contribution</th><th>Interpretation</th></tr></thead>
+                  <tbody id="driver-table-body"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="flows" class="analysis-section" aria-labelledby="flows-title">
+              <header class="section-heading">
+                <div>
+                  <h2 id="flows-title">Delinquency flow and outcomes</h2>
+                  <p id="flow-context">Adjacent-period matched-loan evidence for the selected deal.</p>
+                </div>
+                <span id="flow-match" class="control-pass"></span>
+              </header>
+              <div id="flow-grid" class="flow-grid"></div>
+              <div class="risk-panel">
+                <div>
+                  <h3>Risk-layer concentration</h3>
+                  <p>Transparent count of four disclosed origination conditions. This is not a borrower score.</p>
+                </div>
+                <div id="risk-layers" class="risk-layers"></div>
+              </div>
+              <div class="table-scroll compact-table">
+                <table>
+                  <caption>Reference-pool performance for the selected deal</caption>
+                  <thead><tr><th>Reference pool</th><th class="num">Eligible UPB</th><th class="num">D60+</th><th class="num">1M change</th><th class="num">Assistance</th></tr></thead>
+                  <tbody id="pool-table-body"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="loans" class="analysis-section restricted-section" aria-labelledby="loans-title">
+              <header class="section-heading">
+                <div>
+                  <h2 id="loans-title">Authorized loan detail</h2>
+                  <p>Restricted rows for investigation only. No re-identification or borrower decisioning.</p>
+                </div>
+                <span class="restricted-label">Local access only</span>
+              </header>
+              <div class="loan-controls">
+                <button id="load-loans" class="restricted-action" type="button">Load 50 restricted rows</button>
+                <label><span>Performance state</span><select id="loan-status" disabled><option value="all">All states</option><option value="current">Current</option><option value="d30">D30</option><option value="d60">D60</option><option value="d90">D90+</option><option value="reo">REO</option></select></label>
+                <label><span>Risk layers</span><select id="loan-risk" disabled><option value="all">All layers</option><option value="0">0 conditions</option><option value="1">1 condition</option><option value="2">2 conditions</option><option value="3">3 conditions</option><option value="4">4 conditions</option></select></label>
+                <label class="check-control"><input id="show-identifiers" type="checkbox" disabled /><span>Reveal restricted identifiers</span></label>
+              </div>
+              <div id="loan-warning" class="restricted-warning">
+                Identifiers are masked by default. Revealing them keeps the session local but increases handling sensitivity.
+              </div>
+              <div class="table-scroll loan-table-wrap" role="region" tabindex="0" aria-label="Scrollable restricted loan rows">
+                <table>
+                  <caption>Authorized loan-period rows for the selected deal and period</caption>
+                  <thead><tr><th>Loan</th><th>Pool</th><th>State</th><th>Outcome code</th><th class="num">Current UPB</th><th class="num">Risk layers</th><th class="num">FICO</th><th class="num">LTV</th><th class="num">DTI</th><th>Purpose</th><th>Occupancy</th><th>Modification</th><th>Assistance</th></tr></thead>
+                  <tbody id="loan-table-body"><tr><td colspan="13">Rows are not loaded. Use the explicit local-access action above.</td></tr></tbody>
+                </table>
+              </div>
+              <div class="pagination">
+                <span id="loan-page-status" role="status" aria-live="polite">No restricted rows loaded</span>
+                <div><button id="loan-prev" type="button" disabled>Previous</button><button id="loan-next" type="button" disabled>Next</button></div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="evidence-rail" aria-label="Metric evidence and controls">
+            <section>
+              <h2>Evidence rail</h2>
+              <p>Definition, population, freshness, and controls remain attached to the investigation.</p>
+            </section>
+            <section class="evidence-block">
+              <h3>Selected metric</h3>
+              <label class="metric-picker"><span>Definition to inspect</span><select id="metric-picker"></select></label>
+              <dl id="metric-definition" class="definition-list"></dl>
+            </section>
+            <section class="evidence-block">
+              <h3>Population and exclusions</h3>
+              <dl class="definition-list">
+                <div><dt>Eligible population</dt><dd id="evidence-population">-</dd></div>
+                <div><dt>REO excluded</dt><dd id="evidence-reo">-</dd></div>
+                <div><dt>Unknown excluded</dt><dd id="evidence-unknown">-</dd></div>
+              </dl>
+            </section>
+            <section class="evidence-block">
+              <h3>Control state</h3>
+              <ul class="control-list">
+                <li><strong>Release reconciliation</strong><span>292 of 292 groups exact</span></li>
+                <li><strong>Transition integrity</strong><span>19,523,593 prior rows matched</span></li>
+                <li><strong>Decomposition identity</strong><span>Maximum variance 2.31e-14 bp</span></li>
+                <li><strong>Public boundary</strong><span>Restricted database is not publishable</span></li>
+              </ul>
+            </section>
+            <section class="evidence-block limitation-block">
+              <h3>Interpretation limits</h3>
+              <p>Results are descriptive collateral-surveillance evidence. They are not loss forecasts, causal estimates, investment advice, or borrower-level decisions.</p>
+              <p>Actual Loss rate is unavailable until two adjacent disclosed periods contain the field.</p>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <footer class="shell footer">
+      Restricted local analytical workbench. Approved Freddie Mac CRT disclosures. Not investment advice. No borrower-level lending, pricing, servicing, marketing, or credit decisioning.
+    </footer>
+    <div id="announcement" class="sr-only" aria-live="polite"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

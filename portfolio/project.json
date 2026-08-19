@@ -1,0 +1,279 @@
+{
+  "version": 2,
+  "slug": "freddie-mac-crt-disclosure-analytics",
+  "title": "Freddie Mac CRT Disclosure Analytics",
+  "summary": "A live collateral-surveillance workbench that connects portfolio delinquency movement to the complete masked Freddie Mac CRT loan-period disclosure record.",
+  "outcome": "Delivered bounded public investigation across 20,439,666 masked loan-period rows, exact portfolio rate-and-mix attribution, private object storage, authenticated data retrieval, and a zero-incremental-cost production release.",
+  "industries": ["Capital markets", "Mortgage credit risk"],
+  "categories": ["Analytics", "Data Engineering", "Cloud"],
+  "stack": ["Python", "DuckDB", "Parquet", "JavaScript", "Vercel Functions", "Cloudflare Workers", "Cloudflare R2"],
+  "githubUrl": "https://github.com/vaibhavkhuranaaa/freddie-mac-crt-disclosure-analytics",
+  "liveUrl": "https://freddie-mac-crt-disclosure-analytic.vercel.app",
+  "deployment": {
+    "provider": "Vercel, Cloudflare Workers, and Cloudflare R2",
+    "status": "live",
+    "runtime": "Static review docket with a bounded Python query function and authenticated GET-only object gateway",
+    "exposure": "anonymous",
+    "productionClaim": false,
+    "verifiedAt": "2026-08-19T04:44:37Z",
+    "expiresAt": null,
+    "evidenceRefs": ["deployment.live", "release.full-record", "security.serving-boundary"]
+  },
+  "metrics": [
+    "20,439,666 masked loan-period rows preserved across 292 deal-month assets",
+    "93 disclosure fields plus three lineage columns returned for selected records",
+    "Exact reconciliation across 292 shared groups and exact D60+ rate-and-mix decomposition",
+    "One-file keyed partition scan, 214.706 ms full-history column scan, and 0.588 ms materialized-query p95",
+    "39 Python tests and four Worker tests passed"
+  ],
+  "stages": [
+    "Archive inventory, schema-width validation, and source reconciliation",
+    "Source-faithful Parquet foundation and versioned metric calculation",
+    "Stable keyed replacement of loan identifiers and ZIP3 values",
+    "Complete masked release validation across every row and partition",
+    "Immutable upload to private R2 and authenticated Worker retrieval",
+    "Bounded Vercel query function, public review docket, and hosted verification"
+  ],
+  "architecture": [
+    "The private build plane streams the approved Clarity archive into 292 source-faithful Parquet partitions and calculates versioned surveillance measures in DuckDB.",
+    "A release builder preserves all accepted rows, adds three lineage columns, and replaces the original loan identifier and ZIP3 with stable keyed tokens before publication.",
+    "The 292 immutable masked Parquet assets live in a private Cloudflare R2 bucket with no public bucket endpoint.",
+    "A Cloudflare Worker accepts only authenticated GET requests for one exact allowlisted object under the fixed release prefix.",
+    "A Vercel Python function validates deal, period, status, limit, and offset, fetches one partition with a server-side token, and returns no more than 50 rows.",
+    "The browser renders the risk-committee review docket and record register without receiving storage URLs, service credentials, raw identifiers, or restricted build artifacts."
+  ],
+  "evaluation": [
+    "A complete scan reconciled 20,439,666 release rows to 20,439,666 foundation rows and 292 public assets to 292 deal-month groups.",
+    "Every public row passed the required loan-token and ZIP3-token formats while retaining all 96 stored columns.",
+    "Aggregate measures reconcile exactly across 292 shared groups, and portfolio D60+ movement decomposes exactly into deal rate and exposure-mix contributions.",
+    "Hosted verification covered private-bucket configuration, anonymous denial, authenticated object parity, Vercel API responses, pagination, 96-field detail, security headers, browser runtime, and rollback retention.",
+    "Desktop and mobile Chromium checks found zero automated WCAG A/AA violations and no application errors."
+  ],
+  "operationalTradeoffs": [
+    "Private R2 separates data retention from Git publication and offers more free-tier headroom than Vercel Blob, but adds one Worker and one shared service token.",
+    "Deal-month Parquet retrieval keeps the serving path simple and bounded, but broad cross-partition queries remain a local analytical workflow.",
+    "The public API caps page size at 50 rows and offset at 150,000, favoring investigation over bulk download.",
+    "Workers Free provides a hard 100,000-request daily ceiling and keeps incremental cost at $0, but it is not an availability commitment.",
+    "R2 SQL or a hosted analytical database remains deferred until measured latency, concurrency, growth, or query-shape evidence justifies it."
+  ],
+  "disclaimer": "This portfolio product uses Freddie Mac public disclosure data with selected fields masked before serving. It supports descriptive collateral-surveillance investigation only and must not be used for borrower decisions, re-identification, outside-data matching, forecasts, causal claims, or investment recommendations.",
+  "dataDisclosure": {
+    "source": "Owner-approved Freddie Mac Clarity Connecticut Avenue Securities and Structured Agency Credit Risk standard monthly disclosure archive.",
+    "license": "Source disclosures remain subject to Freddie Mac terms and attribution requirements. This project implies no Freddie Mac endorsement.",
+    "classification": "mixed",
+    "permittedUse": "Non-commercial portfolio review, reproducibility inspection, and descriptive collateral-surveillance analysis within source terms and the project's prohibition on re-identification.",
+    "includedFields": [
+      "All 93 supported standard monthly disclosure positions",
+      "Deal, source-member, and source-field-count lineage",
+      "Stable keyed loan identifier and ZIP3 replacement tokens",
+      "Versioned aggregate exposure, delinquency, transition, outcome, modification, and rate-and-mix measures"
+    ],
+    "excludedFields": [
+      "Original loan identifiers and original ZIP3 values",
+      "Raw source archive, masking key, local paths, and restricted metric database",
+      "Cloudflare Worker token, object-storage URL, and deployment credentials",
+      "Re-identification results, outside-data matches, predictions, and borrower-level decisions"
+    ],
+    "deployedArtifactContents": [
+      "Static HTML, CSS, JavaScript, and aggregate review projection",
+      "Bounded Python record-query function",
+      "Authenticated GET-only Cloudflare Worker",
+      "292 immutable masked Parquet assets and release manifest in private R2"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "release.full-record",
+      "kind": "evaluation",
+      "claim": "The complete masked release preserves every accepted loan-period row, partition, and supported field while replacing both direct identifier fields.",
+      "source": "evaluation/full-record-public-release.md",
+      "method": "Manifest reconciliation and complete DuckDB scan across all 292 Parquet assets, including token-format and field-coverage checks.",
+      "result": "20,439,666 rows; 292 assets; 96 columns; zero invalid loan or ZIP3 tokens",
+      "scope": "Full masked release full-data-v2026-07",
+      "environment": "Local DuckDB validation over immutable Parquet assets",
+      "classification": "masked public disclosure derivative",
+      "execution": "deterministic",
+      "caveat": "Other disclosed field combinations may remain linkable to the original public disclosure."
+    },
+    {
+      "id": "metrics.reconciliation",
+      "kind": "evaluation",
+      "claim": "The versioned metric engine reconciles all shared release groups and exactly explains portfolio D60+ change through deal rate and exposure-mix effects.",
+      "source": "evaluation/m8-metric-engine.md",
+      "method": "Compared current UPB, D30+, and D60+ measures across all 292 shared groups and checked the decomposition identity at eight-decimal rate precision.",
+      "result": "Zero shared-metric variance; decomposition variance below 0.0000000000000231 basis points",
+      "scope": "Metric version m8.1.0 over the complete approved foundation",
+      "environment": "Local DuckDB analytical build",
+      "classification": "derived disclosure metrics",
+      "execution": "deterministic",
+      "caveat": "Descriptive attribution does not establish causality or predict future performance."
+    },
+    {
+      "id": "operations.scaled-local",
+      "kind": "benchmark",
+      "claim": "The current local analytical design supports partition pruning, fast materialized queries, append-only refresh, recovery, and retained history without paid warehouse infrastructure.",
+      "source": "evaluation/m12-scaled-local-hardening.md",
+      "method": "Benchmarked keyed and full-history reads, repeated materialized queries, deterministic monthly append, failure recovery, revision rejection, and retention controls.",
+      "result": "1 of 292 files read; 214.706 ms full-history column scan; 0.588 ms query p95",
+      "scope": "20,439,666-row local foundation and metric database",
+      "environment": "Single-user local DuckDB and Parquet stack",
+      "classification": "private analytical operations",
+      "execution": "local",
+      "caveat": "Results are machine-specific and do not establish concurrent hosted capacity."
+    },
+    {
+      "id": "security.serving-boundary",
+      "kind": "security",
+      "claim": "The public browser cannot access R2 directly or retrieve the Worker token; the gateway rejects anonymous, invalid-path, and non-GET requests.",
+      "source": "docs/decisions/0013-serve-masked-records-from-private-object-storage.md",
+      "method": "Configuration review, Worker tests, anonymous request probe, authenticated object retrieval, API boundary tests, and deployed-asset inspection.",
+      "result": true,
+      "scope": "Private R2 bucket, Cloudflare Worker, Vercel server function, and public browser bundle",
+      "environment": "Cloudflare and Vercel production",
+      "classification": "public query surface over private object storage",
+      "execution": "integration",
+      "caveat": "One shared server-to-server token requires controlled rotation if its boundary is ever in doubt."
+    },
+    {
+      "id": "deployment.live",
+      "kind": "deployment",
+      "claim": "The production dashboard and bounded record API serve the verified full-record release with required security headers and no observed application errors.",
+      "source": "evaluation/full-record-public-release.md",
+      "method": "Hosted HTTP checks, production API query, Chromium pagination and detail interaction, header inspection, Vercel error-log scan, and retained rollback review.",
+      "result": true,
+      "scope": "Vercel production alias, authenticated Worker, and private R2 release",
+      "observedAt": "2026-08-19T04:44:37Z",
+      "environment": "Vercel and Cloudflare production",
+      "classification": "anonymous masked-record portfolio deployment",
+      "execution": "live",
+      "caveat": "Browser evidence covers Chromium only; field performance and concurrent-load behavior remain unmeasured."
+    },
+    {
+      "id": "quality.automated",
+      "kind": "test",
+      "claim": "Data, masking, API, release, dashboard, and Worker contracts pass the repository's automated checks.",
+      "source": "tests/ and infra/data-gateway/src/index.test.mjs",
+      "method": "Python unittest discovery plus Node test execution for the Worker gateway.",
+      "result": "39 Python tests and four Worker tests passed",
+      "scope": "Default-branch full-record release implementation",
+      "environment": "Locked local Python environment and Node test runtime",
+      "classification": "public repository quality controls",
+      "execution": "deterministic",
+      "caveat": "Automated tests do not replace independent usability, cross-browser, or load testing."
+    }
+  ],
+  "story": {
+    "recruiterSummary": "This product answers a capital-markets review question: which CRT exposures deteriorated, how much did each deal contribute, and what disclosed records support the investigation? It preserves the complete approved archive, makes rate-versus-mix attribution explicit, and serves masked records through a private-storage boundary with measured evidence and honest decision limits.",
+    "technicalNarrative": "The private build plane validates historical 89, 90, and 93-field layouts, writes 292 source-faithful Parquet partitions, and calculates metric version m8.1.0 in DuckDB. The public release builder retains every accepted row, adds lineage, and replaces loan identifier and ZIP3 with stable keyed tokens. Immutable masked assets move to private R2. An authenticated GET-only Worker exposes one exact object to a Vercel Python function, which validates bounded filters and returns at most 50 records. The static browser surface combines a filed-sheet risk review with masked record pagination and 96-field detail. Source data, storage, serving, and browser lifecycles remain separate.",
+    "scalabilityRoadmap": [
+      "Measure production latency, cache hit rate, and concurrent browsing before changing the deal-month object design.",
+      "Introduce R2 SQL or a hosted analytical database only when cross-partition query demand or measured concurrency exceeds the current bounded function.",
+      "Automate immutable monthly release promotion and token rotation after a real new-month archive has exercised the documented runbook.",
+      "Add Firefox, Safari, assistive-technology, and field-performance evidence before making broader experience claims."
+    ],
+    "executiveSummary": "The live workbench connects portfolio-level D60+ movement to full masked Freddie Mac CRT disclosure records. It covers 20.4 million loan-period rows, distinguishes deal deterioration from portfolio contribution, and keeps complete Parquet objects behind authenticated server-to-server access. The release costs $0 incrementally and carries a hard free-plan request ceiling, but remains a descriptive portfolio demonstration rather than an operational investment or borrower-decision system.",
+    "intendedUser": "A capital-markets credit analyst, collateral-surveillance reviewer, data engineering reviewer, or hiring manager assessing analytical controls and public-cloud delivery.",
+    "example": {
+      "title": "Investigate a portfolio delinquency increase without confusing rate movement and exposure weight",
+      "steps": [
+        "Open the July 2026 review docket and confirm portfolio D60+ level and month-over-month change",
+        "Compare ranked deal rate movement with each deal's signed contribution to the portfolio change",
+        "Select the highest-contributing deal and review cohort, transition, cure, modification, and loss evidence",
+        "Open the corresponding masked deal-month register and page through complete disclosure rows",
+        "Inspect all 96 stored fields for a selected record while preserving the prohibition on re-identification and borrower decisions"
+      ]
+    },
+    "technologyDecisions": [
+      {
+        "technology": "DuckDB and partitioned Parquet",
+        "rationale": "The measured 20.4 million-row workload meets refresh and query budgets locally while preserving exact source grain and one-file pruning.",
+        "alternative": "Provision a cloud warehouse before measuring need",
+        "tradeoff": "The design is single-user and batch-oriented, but avoids paid infrastructure and extra governance until scale evidence requires it."
+      },
+      {
+        "technology": "Stable keyed masking before release",
+        "rationale": "Cross-period investigation needs a persistent pseudonymous loan key without publishing the original loan identifier or ZIP3.",
+        "alternative": "Publish original identifiers or aggregate away every record",
+        "tradeoff": "Stable tokens preserve analytical linkage but do not remove the linkage risk of all other disclosed field combinations."
+      },
+      {
+        "technology": "Private R2 with an authenticated Worker",
+        "rationale": "Object storage separates data lifecycle from Git, retains free-tier headroom, and keeps bucket locations and credentials out of the browser.",
+        "alternative": "GitHub release assets, public R2, or Vercel Blob",
+        "tradeoff": "The narrow gateway adds one service and one rotating secret, while avoiding public bulk objects and a nearly exhausted storage allowance."
+      },
+      {
+        "technology": "Bounded Vercel query function",
+        "rationale": "Server-side validation and paging support record investigation without shipping service credentials or exposing unrestricted object access.",
+        "alternative": "Direct browser access or a persistent analytical API",
+        "tradeoff": "Queries are limited to one deal-month partition and 50 rows per response, which favors review over bulk exploration."
+      }
+    ],
+    "evidence": [
+      {
+        "value": "20.4M",
+        "label": "Masked loan-period rows",
+        "context": "Every accepted standard monthly disclosure row is present across 292 immutable release assets.",
+        "method": "Manifest reconciliation and complete scan of the public Parquet collection.",
+        "meaning": "The public investigation surface is based on the full approved record rather than an aggregate sample.",
+        "interpretation": "Complete disclosure coverage does not authorize borrower decisions or re-identification.",
+        "evidenceRefs": ["release.full-record"]
+      },
+      {
+        "value": "0 variance",
+        "label": "Shared metric reconciliation",
+        "context": "Current UPB, D30+, and D60+ measures matched across all 292 groups shared with the earlier release.",
+        "method": "Eight-decimal comparison between the versioned metric engine and verified aggregate outputs.",
+        "meaning": "The richer record surface preserves the established portfolio measures.",
+        "interpretation": "Reconciliation proves calculation consistency, not predictive validity.",
+        "evidenceRefs": ["metrics.reconciliation"]
+      },
+      {
+        "value": "0.588 ms",
+        "label": "Materialized query p95",
+        "context": "Twenty common latest-period watchlist queries over the complete local metric database.",
+        "method": "Warm read-only DuckDB benchmark on the verified local machine.",
+        "meaning": "Current analyst triage remains comfortably within the two-second migration threshold.",
+        "threshold": "2,000 ms",
+        "interpretation": "Single-user local evidence does not establish concurrent hosted performance.",
+        "evidenceRefs": ["operations.scaled-local"]
+      },
+      {
+        "value": "$0",
+        "label": "Incremental deployment cost",
+        "context": "Private R2, Workers Free, and the existing Vercel project host the permanent portfolio release.",
+        "method": "Recorded provider configuration and hosted verification after production promotion.",
+        "meaning": "The current public release adds no incremental charge under existing free allowances.",
+        "threshold": "Stop before $5 without new owner approval",
+        "interpretation": "Provider pricing and free-plan policies can change.",
+        "evidenceRefs": ["deployment.live", "security.serving-boundary"]
+      }
+    ],
+    "limitations": [
+      "Stable masking removes the original loan identifier and ZIP3, but other public disclosure fields may remain linkable to the source release.",
+      "The product is descriptive collateral surveillance, not a forecast, causal estimate, tranche-pricing model, investment recommendation, or borrower-decision system.",
+      "Hosted browser evidence covers Chromium only; Firefox, Safari, and assistive-technology sessions remain unverified.",
+      "No independent user study, field performance measurement, or concurrent-load test has been completed.",
+      "The public API is intentionally bounded and does not support bulk or arbitrary cross-partition queries."
+    ]
+  },
+  "resume": {
+    "bulletCandidates": [
+      {
+        "role": "Analytics Engineer",
+        "bullet": "Built a Freddie Mac CRT surveillance product across 20.4 million loan-period records, reconciling 292 deal-month groups exactly and decomposing portfolio D60+ change into signed deal rate and exposure-mix contributions.",
+        "evidenceRefs": ["release.full-record", "metrics.reconciliation"]
+      },
+      {
+        "role": "Data Engineer",
+        "bullet": "Designed a source-faithful DuckDB and Parquet pipeline with historical schema controls, stable keyed masking, one-file partition pruning, append-only refresh, failure recovery, and 0.588 ms materialized-query p95.",
+        "evidenceRefs": ["release.full-record", "operations.scaled-local", "quality.automated"]
+      },
+      {
+        "role": "Data Product Engineer",
+        "bullet": "Delivered a zero-incremental-cost public workbench backed by 292 private R2 assets, an authenticated GET-only Cloudflare Worker, and a bounded Vercel API that exposes complete masked records without shipping storage credentials to the browser.",
+        "evidenceRefs": ["security.serving-boundary", "deployment.live", "quality.automated"]
+      }
+    ]
+  }
+}

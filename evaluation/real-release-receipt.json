@@ -1,0 +1,22 @@
+{
+  "receipt_version": 1,
+  "release_scope": "Freddie Mac CRT reference-pool D30+/D60+/current-UPB analytics only",
+  "input_archive": {
+    "name": "fre-crt-2023-07-2026-07.zip",
+    "sha256": "9355aacdc66995d7f9752336bfb8989e70cae73a7e65161bd0510e08786ad2af"
+  },
+  "aggregate_output": {
+    "path": "data/derived/real_aggregate.csv",
+    "sha256": "2b9d8aae9d2acaa169a39d31f192d0449372ab9120355ddadf678c50085ae72c"
+  },
+  "build_command": "python3 scripts/build_release.py",
+  "test_command": "python3 -m unittest discover -s tests -v && git diff --check",
+  "deployment_url": "https://freddie-mac-crt-disclosure-analytic.vercel.app",
+  "issued_at_utc": "2026-08-05T04:21:40+00:00",
+  "approver": "project-owner",
+  "rollback_procedure": "In Vercel, promote the last verified aggregate-only deployment or remove this deployment. Do not substitute a synthetic or raw-data bundle; the restricted archive remains local and excluded.",
+  "limitations": [
+    "No raw archive or loan-level row is included.",
+    "No tranche waterfall, cash-flow, loss-allocation, prepayment, or borrower-level analytics is claimed."
+  ]
+}

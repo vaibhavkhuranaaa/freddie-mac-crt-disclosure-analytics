@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "status": "enabled",
+  "publicProject": true,
+  "verification": {
+    "url": "https://freddie-mac-crt-disclosure-analytic.vercel.app/api/release",
+    "sourceShaField": "source_sha"
+  }
+}
